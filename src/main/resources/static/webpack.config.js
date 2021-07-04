@@ -10,8 +10,11 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
+        resolve: {
+          extensions: ['.js', '.jsx'],
+        },
         use: {
           loader: 'babel-loader',
           options: {
@@ -23,8 +26,8 @@ module.exports = {
   },
   plugins: [
     new HtmlWbpackPlugin({
-      // template: './src/index.html',
-      template: '../templates/index.html',
+      template: './src/index.html', //версия для разработки
+      // template: '../templates/index.html',  // билд-версия
     }),
   ],
 };
