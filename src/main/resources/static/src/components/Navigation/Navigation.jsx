@@ -1,6 +1,8 @@
 import React from 'react';
 import { Layout, Menu } from 'antd';
 
+import CityGrid from '../CityGrid/CityGrid';
+
 import './navigation.css';
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -28,7 +30,7 @@ const Navigation = () => {
         <Header className="site-layout-sub-header-background" style={{ padding: 0 }} />
         <Content style={{ margin: '24px 16px 0' }}>
           <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-            {/* <Grid /> */}
+            <CityGrid />
           </div>
         </Content>
         <Footer style={{ textAlign: 'center' }}>Ant Design ©2021 Anton Fominov</Footer>
