@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import CityEditorForm from './CityEditorForm';
 
 import { Table, Modal, Tag, Space, Button } from 'antd';
+
+import { getCities } from '../../utils/api';
 
 const data = [
   {
@@ -31,6 +33,19 @@ const CityGrid = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [cityEditor, setCityEditor] = useState(<li></li>);
   const [loading, setLoading] = useState(false);
+
+  const [count, setCount] = useState('');
+  const [scrollCoord, setScrollCoord] = useState(0);
+  const headerRef = useRef();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await getCities();
+      setCount(result);
+      console.log(count);
+    };
+    fetchData();
+  }, []);
 
   const showModal = (props) => {
     const listItems = Object.keys(props).map((key) => {

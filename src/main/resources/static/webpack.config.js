@@ -46,8 +46,8 @@ module.exports = {
   },
   plugins: [
     new HtmlWbpackPlugin({
-      template: './src/index.html', //версия для разработки
-      // template: '../templates/index.html',  // билд-версия
+      //template: './src/index.html', //версия для разработки
+      template: '../templates/index.html', // билд-версия
     }),
   ],
 };
