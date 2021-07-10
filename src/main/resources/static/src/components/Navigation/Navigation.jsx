@@ -1,12 +1,14 @@
 import React from 'react';
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, Typography, Space, Button } from 'antd';
 import { BrowserRouter, NavLink, Route } from 'react-router-dom';
+import { GithubOutlined, MailOutlined } from '@ant-design/icons';
 
 import CityGrid from '../CityGrid/CityGrid';
 import ClubGrid from '../ClubGrid/ClubGrid';
 
 import './navigation.css';
 const { Header, Content, Footer, Sider } = Layout;
+const { Text } = Typography;
 
 const Navigation = () => {
   return (
@@ -39,10 +41,19 @@ const Navigation = () => {
             <div className="site-layout-background" style={{ padding: 24, minHeight: 595 }}>
               <Route exact path="/" component={CityGrid} />
               <Route exact path="/clubs" component={ClubGrid} />
-              {/* <CityGrid /> */}
             </div>
           </Content>
-          <Footer style={{ textAlign: 'center' }}>Anton Fominov</Footer>
+          <Footer style={{ textAlign: 'center' }}>
+            <Space>
+              <Text>anton-fominov@bk.ru</Text>
+              <Button
+                type="link"
+                icon={<GithubOutlined />}
+                href="https://github.com/antonfominov"
+                target="_blank"
+              />
+            </Space>
+          </Footer>
         </Layout>
       </Layout>
     </BrowserRouter>

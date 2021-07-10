@@ -54,10 +54,12 @@ const CityGrid = () => {
       title: 'Название',
       dataIndex: 'name',
       key: 'name',
+      align: 'center',
     },
     {
       title: 'Действия',
       key: 'action',
+      align: 'center',
       render: (text, record) => (
         <Space size="middle">
           <Button onClick={() => showModal(record)}>Редактировать</Button>
