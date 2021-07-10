@@ -1,60 +1,34 @@
 import React, { useState, useEffect, useRef } from 'react';
 import CityEditorForm from './CityEditorForm';
 
-import { Table, Modal, Tag, Space, Button } from 'antd';
+import { Table, Modal, Space, Button } from 'antd';
+import { SyncOutlined } from '@ant-design/icons';
 
 import { getCities } from '../../utils/api';
 
-const data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-];
-
 const CityGrid = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [cityEditor, setCityEditor] = useState(<li></li>);
+  const [cityEditor, setCityEditor] = useState();
   const [loading, setLoading] = useState(false);
 
-  const [count, setCount] = useState('');
-  const [scrollCoord, setScrollCoord] = useState(0);
-  const headerRef = useRef();
+  const [cityData, setCityData] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
       const result = await getCities();
-      setCount(result);
-      console.log(count);
+      setCityData(result.map((item) => ({ ...item, key: item.id })));
+      console.log(cityData);
     };
     fetchData();
   }, []);
 
   const showModal = (props) => {
-    const listItems = Object.keys(props).map((key) => {
-      return <li key={key}>{props[key]}</li>;
-    });
-    setCityEditor(listItems);
+    // const listItems = Object.keys(props).map((key) => {
+    //   return <li key={key}>{props[key]}</li>;
+    // });
+    setCityEditor(props);
 
     setIsModalVisible(true);
-    console.log(listItems);
   };
 
   const handleOk = () => {
@@ -72,49 +46,22 @@ const CityGrid = () => {
 
   const columns = [
     {
-      title: 'Имя',
+      title: 'Номер',
+      dataIndex: 'id',
+      key: 'id',
+    },
+    {
+      title: 'Название',
       dataIndex: 'name',
       key: 'name',
-    },
-    {
-      title: 'Возраст',
-      dataIndex: 'age',
-      key: 'age',
-    },
-    {
-      title: 'Адрес',
-      dataIndex: 'address',
-      key: 'address',
-    },
-    {
-      title: 'Отметки',
-      key: 'tags',
-      dataIndex: 'tags',
-      render: (tags) => (
-        <>
-          {tags.map((tag) => {
-            let color = tag.length > 5 ? 'geekblue' : 'green';
-            if (tag === 'loser') {
-              color = 'volcano';
-            }
-            return (
-              <Tag color={color} key={tag}>
-                {tag.toUpperCase()}
-              </Tag>
-            );
-          })}
-        </>
-      ),
     },
     {
       title: 'Действия',
       key: 'action',
       render: (text, record) => (
         <Space size="middle">
-          <Button type="primary" onClick={() => showModal(record)}>
-            Редактировать
-          </Button>
-          <a>Удалить</a>
+          <Button onClick={() => showModal(record)}>Редактировать</Button>
+          <Button danger>Удалить</Button>
         </Space>
       ),
     },
@@ -122,7 +69,13 @@ const CityGrid = () => {
 
   return (
     <>
-      <Table columns={columns} dataSource={data} />;
+      <Space style={{ marginBottom: 16 }}>
+        <Button type="primary" shape="round">
+          Добавить
+        </Button>
+        <Button type="primary" shape="circle" icon={<SyncOutlined />} />
+      </Space>
+      <Table columns={columns} dataSource={cityData} pagination={{ pageSize: '10' }} />
       <Modal
         title="Редактирование"
         visible={isModalVisible}
@@ -141,7 +94,7 @@ const CityGrid = () => {
             Отмена
           </Button>,
         ]}>
-        <CityEditorForm username="Антон" />
+        <CityEditorForm data={cityEditor} />
       </Modal>
     </>
   );

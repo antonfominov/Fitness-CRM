@@ -3,6 +3,7 @@ import React from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
 
 const CityEditorForm = (props) => {
+  console.log(props);
   const onFinish = (values) => {
     console.log('Success:', values);
   };
@@ -23,7 +24,7 @@ const CityEditorForm = (props) => {
       }}
       initialValues={{
         remember: true,
-        username: props.username,
+        username: props.data.name,
       }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}>
