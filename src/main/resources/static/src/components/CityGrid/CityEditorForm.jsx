@@ -3,7 +3,14 @@ import React from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
 
 const CityEditorForm = (props) => {
-  console.log(props);
+  var data = props.data.name ? props.data.name : undefined;
+  const [form] = Form.useForm();
+
+  form.setFieldsValue({
+    username: data,
+  });
+  console.log(data);
+
   const onFinish = (values) => {
     console.log('Success:', values);
   };
@@ -14,6 +21,7 @@ const CityEditorForm = (props) => {
 
   return (
     <Form
+      form={form}
       id="cityEditorForm"
       name="basic"
       labelCol={{
@@ -24,7 +32,7 @@ const CityEditorForm = (props) => {
       }}
       initialValues={{
         remember: true,
-        username: props.data.name,
+        //username: props.data.name,
       }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}>

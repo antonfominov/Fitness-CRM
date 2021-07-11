@@ -72,14 +72,14 @@ const CityGrid = () => {
   return (
     <>
       <Space style={{ marginBottom: 16 }}>
-        <Button type="primary" shape="round">
+        <Button type="primary" shape="round" onClick={showModal}>
           Добавить
         </Button>
         <Button type="primary" shape="circle" icon={<SyncOutlined />} />
       </Space>
       <Table columns={columns} dataSource={cityData} pagination={{ pageSize: '10' }} />
       <Modal
-        title="Редактирование"
+        title={true ? 'Добавление' : 'Редактирование'}
         visible={isModalVisible}
         onCancel={handleCancel}
         footer={[
