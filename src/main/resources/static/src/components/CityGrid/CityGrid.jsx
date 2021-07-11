@@ -11,6 +11,7 @@ const CityGrid = () => {
   const [cityEditor, setCityEditor] = useState();
   const [loading, setLoading] = useState(false);
 
+  const [formTitle, setFormTitle] = useState();
   const [cityData, setCityData] = useState();
 
   useEffect(() => {
@@ -26,8 +27,8 @@ const CityGrid = () => {
     // const listItems = Object.keys(props).map((key) => {
     //   return <li key={key}>{props[key]}</li>;
     // });
+    setFormTitle(props ? 'Редактирование' : 'Добавление');
     setCityEditor(props);
-
     setIsModalVisible(true);
   };
 
@@ -79,7 +80,7 @@ const CityGrid = () => {
       </Space>
       <Table columns={columns} dataSource={cityData} pagination={{ pageSize: '10' }} />
       <Modal
-        title={true ? 'Добавление' : 'Редактирование'}
+        title={formTitle}
         visible={isModalVisible}
         onCancel={handleCancel}
         footer={[
