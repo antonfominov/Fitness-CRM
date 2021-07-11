@@ -48,6 +48,11 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
   },
+  performance: {
+    hints: false,
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000,
+  },
   plugins: [
     new HtmlWbpackPlugin({
       template: './src/index.html', //версия для разработки
