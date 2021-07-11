@@ -17,7 +17,7 @@ const CityGrid = () => {
   useEffect(() => {
     const fetchData = async () => {
       const result = await getCities();
-      setCityData(result.map((item) => ({ ...item, key: item.id })));
+      setCityData(result.map((item, index) => ({ ...item, key: item.id, number: index + 1 })));
       console.log(cityData);
     };
     fetchData();
@@ -60,7 +60,7 @@ const CityGrid = () => {
   const columns = [
     {
       title: 'Номер',
-      dataIndex: 'id',
+      dataIndex: 'number',
       key: 'id',
     },
     {
