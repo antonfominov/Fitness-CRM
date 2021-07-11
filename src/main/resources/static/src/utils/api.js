@@ -7,3 +7,9 @@ export const getCities = () => {
     return response.data;
   });
 };
+
+export const deleteCity = (props) => {
+  return axios.delete(URL + `/cities`, { params: { id: props.id } }).then((response) => {
+    return response.data;
+  });
+};

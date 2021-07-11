@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import CityEditorForm from './CityEditorForm';
 
-import { Table, Modal, Space, Button } from 'antd';
+import { Table, Modal, Space, Button, Popconfirm, message } from 'antd';
 import { SyncOutlined } from '@ant-design/icons';
 
-import { getCities } from '../../utils/api';
+import { getCities, deleteCity } from '../../utils/api';
 
 const CityGrid = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -45,6 +45,18 @@ const CityGrid = () => {
     setIsModalVisible(false);
   };
 
+  function confirm(props) {
+    console.log(props);
+    deleteCity(props);
+    setCityData(cityData.filter((item) => item.id != props.id));
+    message.success('Элемент успешно удалён');
+  }
+
+  function cancel(e) {
+    console.log(e);
+    message.error('Элемент не удалён');
+  }
+
   const columns = [
     {
       title: 'Номер',
@@ -64,7 +76,16 @@ const CityGrid = () => {
       render: (text, record) => (
         <Space size="middle">
           <Button onClick={() => showModal(record)}>Редактировать</Button>
-          <Button danger>Удалить</Button>
+          <Button danger>
+            <Popconfirm
+              title="Вы уверены что хотите удалить выбранный элемент?"
+              onConfirm={() => confirm(record)}
+              onCancel={cancel}
+              okText="Да"
+              cancelText="Нет">
+              Удалить
+            </Popconfirm>
+          </Button>
         </Space>
       ),
     },
