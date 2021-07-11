@@ -72,7 +72,7 @@ const CityGrid = () => {
   return (
     <>
       <Space style={{ marginBottom: 16 }}>
-        <Button type="primary" shape="round" onClick={showModal}>
+        <Button type="primary" shape="round" onClick={() => showModal()}>
           Добавить
         </Button>
         <Button type="primary" shape="circle" icon={<SyncOutlined />} />

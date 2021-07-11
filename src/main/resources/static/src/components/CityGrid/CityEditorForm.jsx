@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Form, Input, Button, Checkbox } from 'antd';
 
 const CityEditorForm = (props) => {
-  var data = props.data.name ? props.data.name : undefined;
   const [form] = Form.useForm();
 
-  form.setFieldsValue({
-    username: data,
+  useEffect(() => {
+    form.setFieldsValue({
+      username: props.data ? props.data.name : undefined,
+    });
   });
-  console.log(data);
 
   const onFinish = (values) => {
     console.log('Success:', values);
