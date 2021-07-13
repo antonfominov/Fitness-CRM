@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import CityEditorForm from './CityEditorForm';
 
-import { Table, Modal, Space, Button, Popconfirm, message } from 'antd';
+import { Table, Modal, Space, Button, Popconfirm, message, Spin } from 'antd';
 import { SyncOutlined } from '@ant-design/icons';
 
 import { getCities, deleteCity } from '../../utils/api';
@@ -35,12 +35,12 @@ const CityGrid = () => {
 
   const handleOk = (e) => {
     // setLoading(true);
-
-    // setTimeout(() => {
-    //   setLoading(false);
-    //   setIsModalVisible(false);
-    // }, 3000);
-    setIsModalVisible(false);
+    setTimeout(() => {
+      setLoading(false);
+      setIsModalVisible(false);
+    }, 3000);
+    //loading == false ? setIsModalVisible(true) : setIsModalVisible(false);
+    //setIsModalVisible(false);
   };
 
   const handleCancel = () => {
@@ -58,6 +58,12 @@ const CityGrid = () => {
     console.log(e);
     message.error('Элемент не удалён');
   }
+
+  const updateLoading = (value) => {
+    console.log('UPDATE LOADING ' + value);
+    setLoading(value);
+    handleOk();
+  };
 
   const columns = [
     {
@@ -102,6 +108,7 @@ const CityGrid = () => {
         <Button type="primary" shape="circle" icon={<SyncOutlined />} />
       </Space>
       <Table columns={columns} dataSource={cityData} pagination={{ pageSize: '10' }} />
+
       <Modal
         title={formTitle}
         visible={isModalVisible}
@@ -111,16 +118,18 @@ const CityGrid = () => {
             form="cityEditorForm"
             key="submit"
             type="primary"
-            loading={loading}
             onClick={handleOk}
-            htmlType="submit">
+            htmlType="submit"
+            disabled={loading}>
             Принять
           </Button>,
           <Button key="back" onClick={handleCancel}>
             Отмена
           </Button>,
         ]}>
-        <CityEditorForm data={cityEditor} />
+        <Spin spinning={loading}>
+          <CityEditorForm data={cityEditor} updateLoading={updateLoading} />
+        </Spin>
       </Modal>
     </>
   );

@@ -14,6 +14,7 @@ const CityEditorForm = (props) => {
 
   const onFinish = (values) => {
     console.log('Success:', values);
+    props.updateLoading(true);
     //setLoading(true);
   };
 
