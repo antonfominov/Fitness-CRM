@@ -1,18 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
-import { Form, Input, Button, Checkbox } from 'antd';
+import { Form, Input, Button, Checkbox, Spin } from 'antd';
 
 const CityEditorForm = (props) => {
   const [form] = Form.useForm();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     form.setFieldsValue({
-      username: props.data ? props.data.name : undefined,
+      name: props.data ? props.data.name : '',
     });
   });
 
   const onFinish = (values) => {
     console.log('Success:', values);
+    //setLoading(true);
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -20,62 +22,45 @@ const CityEditorForm = (props) => {
   };
 
   return (
-    <Form
-      form={form}
-      id="cityEditorForm"
-      name="basic"
-      labelCol={{
-        span: 5,
-      }}
-      wrapperCol={{
-        span: 16,
-      }}
-      initialValues={{
-        remember: true,
-        //username: props.data.name,
-      }}
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}>
-      <Form.Item
-        label="Имя"
-        name="username"
-        rules={[
-          {
-            required: true,
-            message: 'Введите имя',
-          },
-        ]}>
-        <Input />
-      </Form.Item>
-
-      <Form.Item
-        label="Пароль"
-        name="password"
-        rules={[
-          {
-            required: true,
-            message: 'Введите пароль',
-          },
-        ]}>
-        <Input.Password />
-      </Form.Item>
-
-      <Form.Item
-        name="remember"
-        valuePropName="checked"
+    <Spin spinning={loading}>
+      <Form
+        form={form}
+        id="cityEditorForm"
+        name="basic"
+        labelCol={{
+          span: 5,
+        }}
         wrapperCol={{
-          offset: 8,
           span: 16,
-        }}>
-        <Checkbox>Запомнить меня</Checkbox>
-      </Form.Item>
+        }}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}>
+        <Form.Item
+          label="Название"
+          name="name"
+          //onChange={(e) => onNameChange(e.target.value)}
+          rules={[
+            {
+              required: true,
+              message: 'Введите название',
+            },
+          ]}>
+          <Input />
+        </Form.Item>
 
-      <Form.Item
-        wrapperCol={{
-          offset: 8,
-          span: 16,
-        }}></Form.Item>
-    </Form>
+        <Form.Item
+          label="Пароль"
+          name="password"
+          rules={[
+            {
+              required: true,
+              message: 'Введите пароль',
+            },
+          ]}>
+          <Input.Password />
+        </Form.Item>
+      </Form>
+    </Spin>
   );
 };
 

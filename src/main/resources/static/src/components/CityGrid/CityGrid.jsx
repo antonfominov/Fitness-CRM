@@ -29,16 +29,18 @@ const CityGrid = () => {
     // });
     setFormTitle(props ? 'Редактирование' : 'Добавление');
     setCityEditor(props);
+    console.log(props);
     setIsModalVisible(true);
   };
 
-  const handleOk = () => {
-    setLoading(true);
+  const handleOk = (e) => {
+    // setLoading(true);
 
-    setTimeout(() => {
-      setLoading(false);
-      setIsModalVisible(false);
-    }, 3000);
+    // setTimeout(() => {
+    //   setLoading(false);
+    //   setIsModalVisible(false);
+    // }, 3000);
+    setIsModalVisible(false);
   };
 
   const handleCancel = () => {
