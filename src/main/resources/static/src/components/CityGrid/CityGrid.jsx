@@ -4,7 +4,7 @@ import CityEditorForm from './CityEditorForm';
 import { Table, Modal, Space, Button, Popconfirm, message, Spin } from 'antd';
 import { SyncOutlined } from '@ant-design/icons';
 
-import { getCities, deleteCity } from '../../utils/api';
+import { getCities, deleteCity, createCity } from '../../utils/api';
 
 const CityGrid = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -34,13 +34,10 @@ const CityGrid = () => {
   };
 
   const handleOk = (e) => {
-    // setLoading(true);
     setTimeout(() => {
       setLoading(false);
       setIsModalVisible(false);
     }, 3000);
-    //loading == false ? setIsModalVisible(true) : setIsModalVisible(false);
-    //setIsModalVisible(false);
   };
 
   const handleCancel = () => {
@@ -59,10 +56,15 @@ const CityGrid = () => {
     message.error('Элемент не удалён');
   }
 
-  const updateLoading = (value) => {
-    console.log('UPDATE LOADING ' + value);
+  const addCity = (value) => {
     setLoading(value);
-    handleOk();
+    createCity(value).then((response) => {
+      const city = cityData;
+      city.push(response);
+      setCityData(city.map((item, index) => ({ ...item, key: item.id, number: index + 1 })));
+    });
+    setLoading(false);
+    setIsModalVisible(false);
   };
 
   const columns = [
@@ -107,7 +109,7 @@ const CityGrid = () => {
         </Button>
         <Button type="primary" shape="circle" icon={<SyncOutlined />} />
       </Space>
-      <Table columns={columns} dataSource={cityData} pagination={{ pageSize: '10' }} />
+      <Table columns={columns} dataSource={cityData} pagination={{ pageSize: '5' }} />
 
       <Modal
         title={formTitle}
@@ -118,7 +120,6 @@ const CityGrid = () => {
             form="cityEditorForm"
             key="submit"
             type="primary"
-            onClick={handleOk}
             htmlType="submit"
             disabled={loading}>
             Принять
@@ -128,7 +129,7 @@ const CityGrid = () => {
           </Button>,
         ]}>
         <Spin spinning={loading}>
-          <CityEditorForm data={cityEditor} updateLoading={updateLoading} />
+          <CityEditorForm data={cityEditor} setCityData={setCityData} addCity={addCity} />
         </Spin>
       </Modal>
     </>
