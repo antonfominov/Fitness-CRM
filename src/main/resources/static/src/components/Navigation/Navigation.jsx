@@ -38,7 +38,7 @@ const Navigation = () => {
         <Layout>
           <Header className="site-layout-sub-header-background" style={{ padding: 0 }} />
           <Content style={{ margin: '24px 16px 0' }}>
-            <div className="site-layout-background" style={{ padding: 24, minHeight: 595 }}>
+            <div className="site-layout-background" style={{ padding: 24, minHeight: 585 }}>
               <Route exact path="/" component={CityGrid} />
               <Route exact path="/clubs" component={ClubGrid} />
             </div>
