@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
-import { Form, Input, Button, Checkbox, Spin } from 'antd';
+import { createCity } from '../../utils/api';
+
+import { Form, Input, Button, Checkbox, Spin, Alert } from 'antd';
 
 const CityEditorForm = (props) => {
   const [form] = Form.useForm();
@@ -14,8 +16,8 @@ const CityEditorForm = (props) => {
 
   const onFinish = (values) => {
     console.log('Success:', values);
-    props.updateLoading(true);
-    //setLoading(true);
+    //props.updateLoading(true);
+    props.data ? updateCity({ ...values, id: props.data.id }) : props.addCity(values);
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -39,7 +41,6 @@ const CityEditorForm = (props) => {
         <Form.Item
           label="Название"
           name="name"
-          //onChange={(e) => onNameChange(e.target.value)}
           rules={[
             {
               required: true,
@@ -47,18 +48,6 @@ const CityEditorForm = (props) => {
             },
           ]}>
           <Input />
-        </Form.Item>
-
-        <Form.Item
-          label="Пароль"
-          name="password"
-          rules={[
-            {
-              required: true,
-              message: 'Введите пароль',
-            },
-          ]}>
-          <Input.Password />
         </Form.Item>
       </Form>
     </Spin>
