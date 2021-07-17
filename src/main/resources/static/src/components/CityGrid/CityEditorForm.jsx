@@ -16,8 +16,7 @@ const CityEditorForm = (props) => {
 
   const onFinish = (values) => {
     console.log('Success:', values);
-    //props.updateLoading(true);
-    props.data ? updateCity({ ...values, id: props.data.id }) : props.addCity(values);
+    props.data ? props.update({ ...values, id: props.data.id }) : props.addCity(values);
   };
 
   const onFinishFailed = (errorInfo) => {

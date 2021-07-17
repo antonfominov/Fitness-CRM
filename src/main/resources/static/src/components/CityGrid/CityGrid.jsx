@@ -4,7 +4,7 @@ import CityEditorForm from './CityEditorForm';
 import { Table, Modal, Space, Button, Popconfirm, message, Spin } from 'antd';
 import { SyncOutlined } from '@ant-design/icons';
 
-import { getCities, deleteCity, createCity } from '../../utils/api';
+import { getCities, deleteCity, createCity, updateCity } from '../../utils/api';
 
 const CityGrid = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -16,9 +16,9 @@ const CityGrid = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await getCities();
-      setCityData(result.map((item, index) => ({ ...item, key: item.id, number: index + 1 })));
-      console.log(cityData);
+      await getCity();
+      //setCityData(result.map((item, index) => ({ ...item, key: item.id, number: index + 1 })));
+      //console.log(cityData);
     };
     fetchData();
   }, []);
@@ -56,12 +56,27 @@ const CityGrid = () => {
     message.error('Элемент не удалён');
   }
 
+  const getCity = () => {
+    getCities().then((response) => {
+      setCityData(response.map((item, index) => ({ ...item, key: item.id, number: index + 1 })));
+    });
+  };
+
   const addCity = (value) => {
-    setLoading(value);
+    setLoading(true);
     createCity(value).then((response) => {
       const city = cityData;
       city.push(response);
       setCityData(city.map((item, index) => ({ ...item, key: item.id, number: index + 1 })));
+    });
+    setLoading(false);
+    setIsModalVisible(false);
+  };
+
+  const update = (value) => {
+    setLoading(true);
+    updateCity(value).then((response) => {
+      getCity();
     });
     setLoading(false);
     setIsModalVisible(false);
@@ -129,7 +144,12 @@ const CityGrid = () => {
           </Button>,
         ]}>
         <Spin spinning={loading}>
-          <CityEditorForm data={cityEditor} setCityData={setCityData} addCity={addCity} />
+          <CityEditorForm
+            data={cityEditor}
+            setCityData={setCityData}
+            addCity={addCity}
+            update={update}
+          />
         </Spin>
       </Modal>
     </>

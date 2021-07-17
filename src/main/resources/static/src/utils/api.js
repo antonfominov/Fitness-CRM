@@ -37,3 +37,15 @@ export const createCity = (props) => {
       return false;
     });
 };
+
+export const updateCity = (props) => {
+  return axios
+    .put(`/cities`, { ...props })
+    .then((response) => {
+      return response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+      return false;
+    });
+};
