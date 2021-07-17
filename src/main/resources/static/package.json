@@ -35,5 +35,5 @@
   "optionalDependencies": {
     "fsevents": "^2.0.7"
   },
-  "proxy": "http://localhost:8090"
+  "proxy": "http://localhost:8090/api"
 }
