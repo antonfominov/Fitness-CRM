@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import CityEditorForm from './CityEditorForm';
 
 import { Table, Modal, Space, Button, Popconfirm, message, Spin } from 'antd';
