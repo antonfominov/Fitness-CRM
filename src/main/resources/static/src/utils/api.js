@@ -49,3 +49,51 @@ export const updateCity = (props) => {
       return false;
     });
 };
+
+// Клубы (getClubs, deleteClub, createClub, updateClub)
+
+export const getClubs = () => {
+  return axios
+    .get(`/clubs`)
+    .then((response) => {
+      return response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};
+
+export const deleteClub = (props) => {
+  return axios
+    .delete(`/clubs`, { params: { id: props.id } })
+    .then((response) => {
+      return response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};
+
+export const createClub = (props) => {
+  return axios
+    .post(`/clubs`, { ...props })
+    .then((response) => {
+      return response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+      return false;
+    });
+};
+
+export const updateClub = (props) => {
+  return axios
+    .put(`/clubs`, { ...props })
+    .then((response) => {
+      return response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+      return false;
+    });
+};
