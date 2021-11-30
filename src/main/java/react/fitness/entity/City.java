@@ -10,23 +10,20 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "cities")
 public class City {
-	public City() {
-	}
-	
+
 	@Id
 	@Column(name = "id")
-
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	
 	@Column(name = "name")
 	private String name;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
