@@ -24,7 +24,6 @@ const ClubGrid = () => {
   const showModal = (props) => {
     setFormTitle(props ? 'Редактирование' : 'Добавление');
     setClubEditor(props);
-    console.log(props);
     setIsModalVisible(true);
   };
 
@@ -104,8 +103,8 @@ const ClubGrid = () => {
     },
     {
       title: 'Город',
-      dataIndex: 'parentName',
-      key: 'parentName',
+      dataIndex: 'cityName',
+      key: 'cityName',
       align: 'center',
     },
     {
