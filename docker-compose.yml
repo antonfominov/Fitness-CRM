@@ -1,0 +1,75 @@
+# docker-compose up -d
+
+version: '3.1'
+
+services:
+  db:
+    image: postgres
+    container_name: db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=fitness
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - ../data/postgres-tariff:/var/lib/postgresql
+  front:
+     image: nginx:latest
+     container_name: front
+     ports:
+      - "80:80"
+     volumes:
+      - ./src/main/resources/static/dist:/usr/share/nginx/html:ro]
+     depends_on:
+      - back
+  back:
+    image: openjdk:11
+    container_name: back
+    ports:
+      - "8090:8090"
+    volumes:
+      - ./target:/app
+    depends_on:
+      - db
+    environment:
+      - POSTGRES_HOST=db
+    working_dir: /app
+    command: java -jar fitness-0.0.1-SNAPSHOT.jar
+
+
+
+
+# version: '3'
+# services:
+#   nginx-front:
+#     image: nginx:1.17.8
+#     volumes:
+#     - ./code-front:/code
+#     - ./docker/nginx-front.conf:/etc/nginx/conf.d/nginx-front.conf
+#     networks:
+#       net:
+#         ipv4_address: 192.168.240.2
+#   nginx-back:
+#     image: nginx:1.17.8
+#     volumes:
+#     - ./code-back:/code
+#     - ./docker/nginx-back.conf:/etc/nginx/conf.d/nginx-back.conf
+#     networks:
+#       net:
+#         ipv4_address: 192.168.240.3
+#   php-back:
+#     image: php:7.4-fpm
+#     volumes:
+#       - ./code-back:/code
+#     networks:
+#       net:
+#         ipv4_address: 192.168.240.4
+# networks:
+#   net:
+#     driver: bridge
+#     ipam:
+#       config:
+#         - subnet: 192.168.240.0/24
