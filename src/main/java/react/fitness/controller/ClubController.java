@@ -49,8 +49,6 @@ public ResponseEntity<Object> updateClub(@RequestBody Club club) {
 
 	currentClub.setName(club.getName());
 	currentClub.setCityName(city.getName());
-	System.out.println(currentClub.getCityId());
-	System.out.println(currentClub.getCityName());
 	currentClub = clubRepository.save(currentClub);
 
     return ResponseEntity.ok(currentClub);

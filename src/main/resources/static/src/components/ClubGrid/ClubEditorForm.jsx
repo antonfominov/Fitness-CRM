@@ -19,27 +19,9 @@ const ClubEditorForm = (props) => {
     console.log(`selected ${value}`);
   }
 
-  // useEffect(() => {
-  //   form.setFieldsValue({
-  //     name: props.data ? props.data.name : '',
-  //     openTime: props.data ? props.data.openTime : '',
-  //     closeTime: props.data ? props.data.closeTime : '',
-  //     adress: props.data ? props.data.adress : '',
-  //     cityName: props.data ? props.data.cityId : '',
-  //   });
-  //   getCities().then((response) => {
-  //     const children = [];
-  //     response.forEach(elem => {
-  //       children.push(<Option key={elem.id}>{elem.name}</Option>);
-  //     });
-  //     setListItems(children);
-  //   });
-  // }, []);
-
   useEffect(() => {
     if(props.data) {
       getClub(props.data).then((response) => {
-        console.log(response)
         form.setFieldsValue({
           name: response.name,
           openTime: response.openTime,
@@ -47,21 +29,29 @@ const ClubEditorForm = (props) => {
           adress: response.adress,
           cityId: response.cityId,
         });
-        const children = [];
-        children.push(<Option key={response.cityId} value={response.cityId}>{response.cityName}</Option>);
-        setListItems(children);
-        console.log(listItems);
+        getCities().then((response) => {
+          const children = [];
+          response.forEach(i => children.push(<Option key={i.id} value={i.id}>{i.name}</Option>))
+          setListItems(children);
+        })
+        // const children = [];
+        // children.push(<Option key={response.cityId} value={response.cityId}>{response.cityName}</Option>);
+        // setListItems(children);
       });
     } else {
-      form.setFieldsValue({
-        name: '',
-        openTime: '',
-        closeTime: '',
-        adress: '',
-        cityId: '',
-      })
-      const children = [];
-      setListItems(children);
+      getCities().then((response) => {
+        form.setFieldsValue({
+          name: '',
+          openTime: '',
+          closeTime: '',
+          adress: '',
+          cityId: '',
+        })
+        const children = [];
+        response.forEach(i => children.push(<Option key={i.id} value={i.id}>{i.name}</Option>))
+        //children.push(<Option key={response.cityId} value={response.cityId}>{response.cityName}</Option>);
+        setListItems(children);
+      });
     }
   },[props.data]);
 
