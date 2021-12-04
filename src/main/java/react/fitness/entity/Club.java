@@ -2,21 +2,14 @@ package react.fitness.entity;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.Parent;
-
 @Entity
 @Table(name = "clubs")
 public class Club {
 
-    public Club() {
-    }
-
     @Id
     @Column(name = "id")
-
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "name")
     private String name;
@@ -30,14 +23,13 @@ public class Club {
     @Column(name = "closeTime")
     private String closeTime;
 
-    @Column(name = "parentName")
-    private String parentName;
+    @Column(name = "cityId")
+    private Long cityId;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="city")
-    private City city;
+    @Column(name = "cityName")
+    private String cityName;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
@@ -57,16 +49,15 @@ public class Club {
         return closeTime;
     }
 
-    public String getParentName() {
-        return parentName;
+    public Long getCityId() {
+        return cityId;
     }
 
-    @JsonIgnore
-    public City getCity() {
-        return city;
+    public String getCityName() {
+        return cityName;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -82,15 +73,15 @@ public class Club {
         this.closeTime = closeTime;
     }
 
-    public void setCity(City city) {
-        this.city = city;
+    public void setCityId(Long cityId) {
+        this.cityId = cityId;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setParentName(String parentName) {
-        this.parentName = parentName;
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
     }
 }

@@ -63,6 +63,17 @@ export const getClubs = () => {
     });
 };
 
+export const getClub = (props) => {
+  return axios
+    .get(`/clubs/${props.id}`)
+    .then((response) => {
+      return response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};
+
 export const deleteClub = (props) => {
   return axios
     .delete(`/clubs`, { params: { id: props.id } })

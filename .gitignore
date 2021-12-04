@@ -37,3 +37,9 @@ build/
 src/main/resources/static/node_modules/
 
 src/main/resources/static/dist/
+src/main/resources/static/package-lock.json
+src/main/resources/static/package-lock.json
+src/main/resources/static/dist/index.html
+src/main/resources/static/dist/bundle.js.LICENSE.txt
+src/main/resources/static/package-lock.json
+src/main/resources/templates/bundle.js

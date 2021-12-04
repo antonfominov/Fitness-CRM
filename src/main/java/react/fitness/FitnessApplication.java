@@ -5,8 +5,8 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class })
-@EnableAutoConfiguration
+@SpringBootApplication
+//@EnableAutoConfiguration
 public class FitnessApplication {
 
 	public static void main(String[] args) {

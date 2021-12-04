@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 import react.fitness.entity.City;
 import react.fitness.repository.CityRepository;
 
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin
 @RestController
 @RequestMapping("/api/cities")
 public class CityController {
-	
+
 @Autowired
-private CityRepository cityRepository;	
+private CityRepository cityRepository;
 
 @GetMapping
 public Iterable<City> getAll(){
@@ -44,7 +44,7 @@ public ResponseEntity<Object> updateCity(@RequestBody City city) {
 }
 	
 @DeleteMapping
-public Boolean delete(@RequestParam Integer id){
+public Boolean delete(@RequestParam Long id){
 	try {
 		cityRepository.deleteById(id);
 		return true;
