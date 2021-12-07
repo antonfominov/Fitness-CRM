@@ -22,7 +22,7 @@ services:
      ports:
       - "80:80"
      volumes:
-      - ./src/main/resources/static/dist:/usr/share/nginx/html:ro]
+      - ./src/main/resources/static/dist:/usr/share/nginx/html:ro
      depends_on:
       - back
   back:
