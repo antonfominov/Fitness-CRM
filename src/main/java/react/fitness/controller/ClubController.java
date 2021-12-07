@@ -36,6 +36,7 @@ public ResponseEntity<Object> getSingle(@PathVariable Long id){
 public ResponseEntity<Object> createClub(@RequestBody Club club){
 	City city = cityRepository.findById(club.getCityId()).orElseThrow(RuntimeException::new);
 	club.setCityName(city.getName());
+	System.out.println(club.getOpenTime());
     Club savedClub = clubRepository.save(club);
     return ResponseEntity.ok(savedClub);
 }
@@ -45,10 +46,12 @@ public ResponseEntity<Object> updateClub(@RequestBody Club club) {
 	Club currentClub = clubRepository.findById(club.getId()).orElseThrow(RuntimeException::new);
 	City city = cityRepository.findById(club.getCityId()).orElseThrow(RuntimeException::new);
 
-	System.out.println(city.getName());
-
 	currentClub.setName(club.getName());
+	currentClub.setCityId(city.getId());
 	currentClub.setCityName(city.getName());
+	currentClub.setAdress(club.getAdress());
+	currentClub.setCloseTime(club.getCloseTime());
+	currentClub.setOpenTime(club.getOpenTime());
 	currentClub = clubRepository.save(currentClub);
 
     return ResponseEntity.ok(currentClub);
