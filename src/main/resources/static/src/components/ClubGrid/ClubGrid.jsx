@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import moment from 'moment';
 import ClubEditorForm from './ClubEditorForm';
 
 import { Table, Modal, Space, Button, Popconfirm, message, Spin } from 'antd';
@@ -57,6 +58,7 @@ const ClubGrid = () => {
   };
 
   const addClub = (value) => {
+    console.log(value);
     setLoading(true);
     createClub(value).then((response) => {
       const club = clubData;
@@ -93,7 +95,7 @@ const ClubGrid = () => {
       dataIndex: 'time',
       key: 'openTime + closeTime',
       align: 'center',
-      render: (text, row) => <p> {row.openTime + ' - ' + row.closeTime} </p>,
+      render: (text, row) => <p> {moment.parseZone(row.openTime).format("HH:mm") + ' - ' + moment.parseZone(row.closeTime).format("HH:mm")} </p>,
     },
     {
       title: 'Адрес',

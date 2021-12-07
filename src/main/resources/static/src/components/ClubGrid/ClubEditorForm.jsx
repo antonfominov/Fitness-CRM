@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from 'react';
 
-import { createClub, getCities, getClub } from '../../utils/api';
+import { getCities, getClub } from '../../utils/api';
 
-import { Form, Input, Button, Checkbox, Spin, Alert, Select } from 'antd';
-import CityEditorForm from '../CityGrid/CityEditorForm';
-import { options } from 'less';
+import { Form, Input, Button, Checkbox, Spin, Alert, Select, TimePicker } from 'antd';
+import moment from 'moment';
 
 const ClubEditorForm = (props) => {
   const { Option } = Select;
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
-
-  const [cityData, setCityData] = useState();
 
   const [listItems, setListItems] = useState([]);
 
@@ -24,8 +21,8 @@ const ClubEditorForm = (props) => {
       getClub(props.data).then((response) => {
         form.setFieldsValue({
           name: response.name,
-          openTime: response.openTime,
-          closeTime: response.closeTime,
+          openTime: moment.parseZone(response.openTime),
+          closeTime: moment.parseZone(response.closeTime),
           adress: response.adress,
           cityId: response.cityId,
         });
@@ -45,6 +42,8 @@ const ClubEditorForm = (props) => {
           openTime: '',
           closeTime: '',
           adress: '',
+          openTime: moment('08:00', 'HH:mm'),
+          closeTime: moment('20:00', 'HH:mm'),
           cityId: '',
         })
         const children = [];
@@ -98,7 +97,7 @@ const ClubEditorForm = (props) => {
               message: 'Введите время',
             },
           ]}>
-          <Input />
+          <TimePicker format={'HH:mm'} minuteStep={10}/>
         </Form.Item>
         <Form.Item
           label="Время закрытия"
@@ -109,7 +108,7 @@ const ClubEditorForm = (props) => {
               message: 'Введите время',
             },
           ]}>
-          <Input />
+          <TimePicker format={'HH:mm'} minuteStep={10}/>
         </Form.Item>
         <Form.Item
           label="Адрес"
