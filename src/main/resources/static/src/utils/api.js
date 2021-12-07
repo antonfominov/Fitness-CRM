@@ -1,8 +1,8 @@
 import * as axios from 'axios';
+import moment from 'moment';
 
+//axios.defaults.baseURL = 'http://46.174.51.154:8090/api';
 axios.defaults.baseURL = 'http://localhost:8090/api';
-
-//const URL = 'http://localhost:8090/api';
 
 export const getCities = () => {
   return axios
@@ -86,6 +86,9 @@ export const deleteClub = (props) => {
 };
 
 export const createClub = (props) => {
+  let time = moment.parseZone(props.openTime).toISOString();
+  props.openTime = moment.parseZone(props.openTime).toISOString();
+  props.closeTime = moment.parseZone(props.closeTime).toISOString();
   return axios
     .post(`/clubs`, { ...props })
     .then((response) => {
@@ -98,6 +101,8 @@ export const createClub = (props) => {
 };
 
 export const updateClub = (props) => {
+  props.openTime = moment.parseZone(props.openTime).toISOString();
+  props.closeTime = moment.parseZone(props.closeTime).toISOString();
   return axios
     .put(`/clubs`, { ...props })
     .then((response) => {
